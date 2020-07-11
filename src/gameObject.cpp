@@ -1,25 +1,26 @@
 #include "../inc/gameObject.h"
 
 
-GameObejct::GameObejct(sf::Vector2<int> pos, sf::Color color){
+GameObject::GameObject(sf::Vector2<int> pos, sf::Color color){
   _pos = pos;
   _color = color;
 }
 
 
-GameObejct::~GameObejct(){
+GameObject::~GameObject(){
 
 }
 
-void GameObejct::update(){
-
+void GameObject::update(sf::RenderWindow *window){
+  render(window);
+  control();
 }
 
 // getters
-sf::Vector2<int> GameObejct::getPos(){
+sf::Vector2<int> GameObject::getPos(){
   return _pos;
 }
 
-sf::Color GameObejct::getColor(){
+sf::Color GameObject::getColor(){
   return _color;
 }

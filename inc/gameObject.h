@@ -3,19 +3,19 @@
 
 #include "settings.h"
 
-class GameObejct{
+class GameObject{
 private:
   sf::Vector2<int> _pos;
   sf::Color _color;
 protected:
-  virtual void render() = 0;
+  virtual void render(sf::RenderWindow *window) = 0;
   virtual void control() = 0;
 public:
-  GameObejct(sf::Vector2<int> pos, sf::Color color);
-  ~GameObejct();
+  GameObject(sf::Vector2<int> pos, sf::Color color);
+  ~GameObject();
   sf::Vector2<int> getPos();
   sf::Color getColor();
-  void update();
+  void update(sf::RenderWindow *window);
 };
 
 #endif
