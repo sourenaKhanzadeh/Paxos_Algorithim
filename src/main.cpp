@@ -1,4 +1,4 @@
-#include "../inc/settings.h"
+#include "../inc/gameObject.h"
 
 int main(){
   // create a window
