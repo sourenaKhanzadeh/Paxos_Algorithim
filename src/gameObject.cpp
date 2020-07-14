@@ -11,6 +11,7 @@ GameObject::~GameObject(){
 
 }
 
+
 void GameObject::update(sf::RenderWindow *window){
   render(window);
   control();
