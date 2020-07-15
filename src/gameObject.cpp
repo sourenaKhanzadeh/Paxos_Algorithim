@@ -1,5 +1,6 @@
 #include "../inc/gameObject.h"
 
+sf::RenderWindow* GameObject::window = NULL;
 
 GameObject::GameObject(sf::Vector2<int> pos, sf::Color color){
   _pos = pos;
@@ -11,9 +12,12 @@ GameObject::~GameObject(){
 
 }
 
+void GameObject::setPos(sf::Vector2<int> val){
+  _pos = val;
+}
 
-void GameObject::update(sf::RenderWindow *window){
-  render(window);
+void GameObject::update(){
+  render();
   control();
 }
 

@@ -4,14 +4,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <thread>
+#include <unistd.h>
 #include <time.h>
+#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <thread>
 
 #define SCREEN_W 1080
 #define SCREEN_H 910
 #define FPS 64
 #define FONT_SIZE 15
+#define TIME_DELAY 0.5
+#define LEADER_OUTLINE_THICKNESS 5
 
 #define KEY(x) sf::Keyboard::isKeyPressed(sf::Keyboard::x)
 

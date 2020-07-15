@@ -4,7 +4,7 @@ int main(){
   // create a window
   sf::RenderWindow window(sf::VideoMode(SCREEN_W, SCREEN_H), "Paxos Algorithim");
 
-  // get Nodes
+  // get Nodes TODO: rplaced by Node system
   std::vector<Node*> nodes = awakeNode();
 
   sf::Font font;
@@ -24,7 +24,14 @@ int main(){
   // change frameRate
   window.setFramerateLimit(FPS);
 
+  // change static GameObject window
+  GameObject::window = &window;
+
+  // run the program
   while(window.isOpen()){
+    // delay system
+    sleep(TIME_DELAY);
+
     // Process events
     sf::Event event;
     while (window.pollEvent(event))
@@ -38,7 +45,7 @@ int main(){
 
     // update Nodes
     for(int i=0;i<nodes.size();i++)
-      nodes.at(i)->update(&window);
+      nodes.at(i)->update();
 
     window.draw(nodes_num);
 

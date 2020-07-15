@@ -6,9 +6,14 @@ private:
   std::string _data;
   float _rad;
   float _drot=10.f;
+  bool _leader = false;
+  bool _drag = false;
   sf::CircleShape circle;
+  void _mouse_drag(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_col[2]);
+  void _select_leader(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_col[2]);
 public:
   static int num;
+  static bool leader_elected;
   Node(sf::Vector2<int> pos, sf::Color color, float radius, std::string data)
   : GameObject(pos, color){
     _data = data;
@@ -17,7 +22,7 @@ public:
     _drot*=_rad*num;
   }
   ~Node();
-  void render(sf::RenderWindow *window) override;
+  void render() override;
   void control() override;
 };
 

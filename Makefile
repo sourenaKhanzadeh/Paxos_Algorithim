@@ -4,7 +4,7 @@ SRC = ./src
 INC = ./inc 
 BIN = ./bin
 
-LIB =  -lsfml-graphics -lsfml-system -lsfml-window
+LIB =  -lsfml-graphics -lsfml-system -lsfml-window -lpthread
 
 ################
 #    COLORS    #
