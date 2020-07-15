@@ -8,12 +8,16 @@ Node::~Node(){
 }
 
 void Node::render(){
+  /**
+  * render the display
+  * of the node
+  */
   sf::CircleShape circle(_rad);
   sf::Vector2<int> pos = getPos();
 
+
   // set position,origin, color and rotate around pivot
   circle.setFillColor(getColor());
-  circle.rotate(_drot);
   circle.setPosition(pos.x, pos.y);
 
   // set leader display attributes
@@ -44,6 +48,9 @@ void Node::_mouse_drag(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_
 }
 
 void Node::_select_leader(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_col[2]){
+  /**
+  * select the leader by right clicking on the node
+  */
   if(sf::Mouse::isButtonPressed(sf::Mouse::Right) && mouse_col[0] && mouse_col[1]){
     _leader = true;
   }
@@ -74,9 +81,9 @@ std::vector<Node*> awakeNode(){
   * awaken the gameObject
   * Node factory
   */
-  size_t num = N_NODE(15);
+  size_t num = N_NODE(25);
   float rad = 10;
-  std::string data = "1";
+  std::string data = "";
 
   std::vector<Node*> scene;
 

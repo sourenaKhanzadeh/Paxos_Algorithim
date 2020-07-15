@@ -1,11 +1,14 @@
-#include "../inc/node.h"
+#include "../inc/nodeSys.h"
 
 int main(){
   // create a window
   sf::RenderWindow window(sf::VideoMode(SCREEN_W, SCREEN_H), "Paxos Algorithim");
 
-  // get Nodes TODO: rplaced by Node system
-  std::vector<Node*> nodes = awakeNode();
+  // Create a Node system
+  NodeSystem nodes(25, 5, "");
+
+  // awaken node system
+  nodes.awake();
 
   sf::Font font;
   // Load it from a file
@@ -16,7 +19,7 @@ int main(){
   }
 
   // Number of nodes
-  sf::Text nodes_num(std::string("Number of Nodes: ") + std::to_string(nodes.size()),
+  sf::Text nodes_num(std::string("Number of Nodes: ") + std::to_string(nodes.getSize()),
   font, FONT_SIZE);
   nodes_num.setPosition(10, 10);
   nodes_num.setFillColor(sf::Color::Black);
@@ -44,9 +47,9 @@ int main(){
     window.clear(sf::Color::White);
 
     // update Nodes
-    for(int i=0;i<nodes.size();i++)
-      nodes.at(i)->update();
+    nodes.update();
 
+    //display text
     window.draw(nodes_num);
 
     // display the window

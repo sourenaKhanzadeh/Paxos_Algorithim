@@ -1,11 +1,12 @@
 #include "gameObject.h"
 
+#ifndef NODE
+#define NODE
 
 class Node: public GameObject{
 private:
   std::string _data;
   float _rad;
-  float _drot=10.f;
   bool _leader = false;
   bool _drag = false;
   sf::CircleShape circle;
@@ -19,7 +20,6 @@ public:
     _data = data;
     _rad = radius;
     num++;
-    _drot*=_rad*num;
   }
   ~Node();
   void render() override;
@@ -27,3 +27,5 @@ public:
 };
 
 std::vector<Node*> awakeNode();
+
+#endif
