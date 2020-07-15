@@ -5,17 +5,18 @@
 
 class NodeSystem{
 private:
-  size_t _num;
   float _rad;
   std::string _data;
+  int _num;
   std::vector<Node*> _nodes;
-  sf::RenderWindow *_window;
+  void _promise();
+  int leader_index;
 public:
-  NodeSystem(size_t num, float rad, std::string data);
+  NodeSystem(int num, float rad, std::string data);
   ~NodeSystem();
   void update();
   void awake();
-  size_t getSize();
+  int getSize();
 };
 
 #endif

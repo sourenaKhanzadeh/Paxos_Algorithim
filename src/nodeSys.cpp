@@ -1,10 +1,10 @@
 #include "../inc/nodeSys.h"
 
-NodeSystem::NodeSystem(size_t num, float rad, std::string data){
+NodeSystem::NodeSystem(int num, float rad, std::string data){
   _num = N_NODE(num);
   _rad = rad;
   _data = data;
-  _window = GameObject::window;
+
 }
 
 NodeSystem::~NodeSystem(){
@@ -24,13 +24,49 @@ void NodeSystem::awake(){
   }
 }
 
-void NodeSystem::update(){
+void NodeSystem::_promise(){
+  /**
+  * leader node makes promise
+  * to none leader nodes
+  */
   for(int i=0;i<_num;i++){
-    _nodes.at(i)->update();
+    if(i == leader_index)continue;
+    if(leader_index>=0){
+
+      sf::Vector2f dline = (sf::Vector2f)_nodes.at(i)->getPos() +
+        sf::Vector2f(_rad, _rad);
+
+      // take vector from leader to other nodes
+      sf::Vertex line[]={
+
+        sf::Vertex((sf::Vector2f)_nodes.at(leader_index)->getPos() +
+         sf::Vector2f(_rad, _rad), sf::Color::Blue),
+
+         sf::Vertex(dline, sf::Color::Blue)
+
+        // sf::Vertex((sf::Vector2f)_nodes.at(i)->getPos() +
+         // sf::Vector2f(_rad, _rad), sf::Color::Blue)
+      };
+
+
+      GameObject::window->draw(line, 2, sf::Lines);
+
+    }
   }
 }
 
+void NodeSystem::update(){
+  for(int i=0;i<_num;i++){
+    _nodes.at(i)->update();
+    if(_nodes.at(i)->isLeader())leader_index=i;
+  }
+  // std::thread promise(_promise);
+  // promise.join();
+  _promise();
 
-size_t NodeSystem::getSize(){
+}
+
+
+int NodeSystem::getSize(){
   return _num;
 }

@@ -11,6 +11,7 @@ protected:
   virtual void render() = 0;
   virtual void control() = 0;
 public:
+  static sf::Vector2f unitVector(sf::Vector2f v);
   static sf::RenderWindow *window;
   GameObject(sf::Vector2<int> pos, sf::Color color);
   ~GameObject();

@@ -8,6 +8,7 @@
 #include <time.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <math.h>
 #include <thread>
 
 #define SCREEN_W 1080

@@ -29,3 +29,10 @@ sf::Vector2<int> GameObject::getPos(){
 sf::Color GameObject::getColor(){
   return _color;
 }
+
+
+sf::Vector2f GameObject::unitVector(sf::Vector2f v){
+  // get norm
+  float v_norm = sqrt(pow(v.x, 2) + pow(v.y, 2));
+  return v/v_norm;
+}

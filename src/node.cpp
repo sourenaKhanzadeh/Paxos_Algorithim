@@ -75,28 +75,6 @@ void Node::control(){
   _select_leader(pos, mouse_pos, mouse_col);
 }
 
-
-std::vector<Node*> awakeNode(){
-  /*
-  * awaken the gameObject
-  * Node factory
-  */
-  size_t num = N_NODE(25);
-  float rad = 10;
-  std::string data = "";
-
-  std::vector<Node*> scene;
-
-  // seed srand to current time
-  srand(time(0));
-
-  // create random number of nodes
-  for(int i=0;i<num;i++){
-    scene.push_back(
-      new Node(sf::Vector2<int>((rand()%(SCREEN_W-100))+50,
-      (rand()%(SCREEN_H-100))+50),
-    sf::Color::Black,rad, data));
-  }
-
-  return scene;
+bool Node::isLeader(){
+  return _leader;
 }

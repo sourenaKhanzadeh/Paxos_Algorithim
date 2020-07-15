@@ -24,8 +24,8 @@ public:
   ~Node();
   void render() override;
   void control() override;
+  bool isLeader();
 };
 
-std::vector<Node*> awakeNode();
 
 #endif

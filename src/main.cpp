@@ -5,8 +5,8 @@ int main(){
   sf::RenderWindow window(sf::VideoMode(SCREEN_W, SCREEN_H), "Paxos Algorithim");
 
   // Create a Node system
-  NodeSystem nodes(25, 5, "");
-
+  NodeSystem nodes(2, 5, "");
+  
   // awaken node system
   nodes.awake();
 
@@ -19,10 +19,10 @@ int main(){
   }
 
   // Number of nodes
-  sf::Text nodes_num(std::string("Number of Nodes: ") + std::to_string(nodes.getSize()),
+  sf::Text nodes_num_text(std::string("Number of Nodes: ") + std::to_string(nodes.getSize()),
   font, FONT_SIZE);
-  nodes_num.setPosition(10, 10);
-  nodes_num.setFillColor(sf::Color::Black);
+  nodes_num_text.setPosition(10, 10);
+  nodes_num_text.setFillColor(sf::Color::Black);
 
   // change frameRate
   window.setFramerateLimit(FPS);
@@ -50,7 +50,7 @@ int main(){
     nodes.update();
 
     //display text
-    window.draw(nodes_num);
+    window.draw(nodes_num_text);
 
     // display the window
     window.display();
