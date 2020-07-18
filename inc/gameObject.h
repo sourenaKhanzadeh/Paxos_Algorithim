@@ -16,6 +16,7 @@ public:
   GameObject(sf::Vector2<int> pos, sf::Color color);
   ~GameObject();
   void setPos(sf::Vector2<int> val);
+  void setColor(sf::Color c);
   sf::Vector2<int> getPos();
   sf::Color getColor();
   void update();

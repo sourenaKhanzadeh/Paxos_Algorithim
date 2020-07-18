@@ -16,6 +16,10 @@ void GameObject::setPos(sf::Vector2<int> val){
   _pos = val;
 }
 
+void GameObject::setColor(sf::Color col){
+  _color = col;
+}
+
 void GameObject::update(){
   render();
   control();

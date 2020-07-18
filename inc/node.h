@@ -3,6 +3,9 @@
 #ifndef NODE
 #define NODE
 
+
+bool inRange(unsigned low, unsigned high, unsigned x);
+
 class Node: public GameObject{
 private:
   std::string _data;
@@ -13,6 +16,7 @@ private:
   void _mouse_drag(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_col[2]);
   void _select_leader(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_col[2]);
 public:
+  bool recieved = false;
   static int num;
   static bool leader_elected;
   Node(sf::Vector2<int> pos, sf::Color color, float radius, std::string data)
@@ -25,6 +29,8 @@ public:
   void render() override;
   void control() override;
   bool isLeader();
+  void appendData(std::string val);
+  std::string getData(){return _data;}
 };
 
 

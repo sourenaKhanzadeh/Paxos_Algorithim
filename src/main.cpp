@@ -1,12 +1,13 @@
 #include "../inc/nodeSys.h"
 
+
 int main(){
   // create a window
   sf::RenderWindow window(sf::VideoMode(SCREEN_W, SCREEN_H), "Paxos Algorithim");
 
   // Create a Node system
   NodeSystem nodes(2, 5, "");
-  
+
   // awaken node system
   nodes.awake();
 

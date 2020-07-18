@@ -3,6 +3,13 @@
 int Node::num = 1;
 bool leader_elected = false;
 
+// Returns true if x is in range [low..high], else false
+bool inRange(unsigned low, unsigned high, unsigned x)
+{
+    return  ((x-low) <= (high-low));
+}
+
+
 Node::~Node(){
   num--;
 }
@@ -28,6 +35,24 @@ void Node::render(){
   }
   // render Node in window
   GameObject::window->draw(circle);
+
+  // represent data of the node
+
+  sf::Font font;
+  // Load it from a file
+  if (!font.loadFromFile("font/arial.ttf"))
+  {
+      // error...
+      exit(EXIT_FAILURE);
+  }
+
+  // Number of nodes
+  sf::Text data_text(_data,
+  font, FONT_SIZE);
+  data_text.setPosition(getPos().x - _data.size(), getPos().y-(_rad*4));
+  data_text.setFillColor(sf::Color::Magenta);
+
+  GameObject::window->draw(data_text);
 }
 
 
@@ -45,6 +70,7 @@ void Node::_mouse_drag(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_
       _drag = false;
     }
   }
+
 }
 
 void Node::_select_leader(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_col[2]){
@@ -65,8 +91,10 @@ void Node::control(){
 
   // check constraint's
   bool mouse_col[2] = {
-    pos.x-_rad <= mouse_pos.x && mouse_pos.x <= pos.x + _rad,
-    pos.y-_rad <= mouse_pos.y && mouse_pos.y <= pos.y+_rad
+    // pos.x-_rad <= mouse_pos.x && mouse_pos.x <= pos.x + _rad,
+    // pos.y-_rad <= mouse_pos.y && mouse_pos.y <= pos.y+_rad
+    inRange(pos.x-_rad*3, pos.x+_rad*3, mouse_pos.x),
+    inRange(pos.y-_rad*3, pos.y+_rad*3, mouse_pos.y)
   };
 
   // Drag node
@@ -77,4 +105,8 @@ void Node::control(){
 
 bool Node::isLeader(){
   return _leader;
+}
+
+void Node::appendData(std::string val){
+  _data+= std::string(", ") + val;
 }
