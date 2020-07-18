@@ -22,5 +22,6 @@
 #define KEY(x) sf::Keyboard::isKeyPressed(sf::Keyboard::x)
 
 #define N_NODE(x) (3*x) + 1
+#define R_NODE(x) (x-1)/3
 
 #endif

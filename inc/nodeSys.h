@@ -16,6 +16,7 @@ private:
   int _num;
   std::vector<Node*> _nodes;
   void _promise();
+  void _clear();
   bool _is_promise = false;
   int leader_index;
 public:

@@ -50,6 +50,16 @@ void NodeSystem::awake(){
   }
 }
 
+void NodeSystem::_clear(){
+  for(int i=0;i<_num;i++){
+    delete _nodes.at(i);
+    _nodes.at(i) = NULL;
+  }
+  _nodes.clear();
+  _scaler = 1;
+  _is_promise = false;
+}
+
 void NodeSystem::_promise(){
   /**
   * leader node makes promise
@@ -59,7 +69,7 @@ void NodeSystem::_promise(){
   std::string value = random_string().substr(0,2);
 
   for(int i=0;i<_nodes.size();i++){
-    if(i != leader_index && leader_index < _nodes.size())
+    if(_nodes.at(i) != NULL && i != leader_index && leader_index < _nodes.size())
       if(leader_index>=0){
 
         // add promise to the data
@@ -118,13 +128,27 @@ void NodeSystem::_promise(){
 
 void NodeSystem::update(){
   for(int i=0;i<_num;i++){
-    _nodes.at(i)->update();
-    if(_nodes.at(i)->isLeader())leader_index=i;
+    if(_nodes.at(i) != NULL){
+      _nodes.at(i)->update();
+      if(_nodes.at(i)->isLeader())leader_index=i;
+    }
   }
   // send promise if spacebar is pressed
   if(!_is_promise && KEY(Space)){
     _is_promise = true;
   }
+
+  // if up key pressed then increase the size of the nodes
+  if(KEY(Up)){
+    _clear();
+    _num = N_NODE(R_NODE(_num)+2);
+    awake();
+  }else if(KEY(Down)){
+    _clear();
+    _num = N_NODE(R_NODE(_num)-2);
+    awake();
+  }
+
   if(_is_promise){
     std::thread promise(&NodeSystem::_promise, this);
     promise.join();

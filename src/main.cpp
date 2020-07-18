@@ -52,6 +52,7 @@ int main(){
 
     //display text
     window.draw(nodes_num_text);
+    nodes_num_text.setString(std::string("Number of Nodes: ") + std::to_string(nodes.getSize()));
 
     // display the window
     window.display();

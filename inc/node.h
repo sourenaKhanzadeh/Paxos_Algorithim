@@ -3,7 +3,6 @@
 #ifndef NODE
 #define NODE
 
-
 bool inRange(unsigned low, unsigned high, unsigned x);
 
 class Node: public GameObject{
