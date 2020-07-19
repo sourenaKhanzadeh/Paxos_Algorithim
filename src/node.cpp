@@ -2,6 +2,7 @@
 
 int Node::num = 1;
 bool leader_elected = false;
+int Node::confirms = 0;
 
 // Returns true if x is in range [low..high], else false
 bool inRange(unsigned low, unsigned high, unsigned x)

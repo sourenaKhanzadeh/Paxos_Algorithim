@@ -15,9 +15,12 @@ private:
   std::string _data;
   int _num;
   std::vector<Node*> _nodes;
+
   void _promise();
   void _clear();
+
   bool _is_promise = false;
+  bool _data_mutex = true;
   int leader_index;
 public:
   NodeSystem(int num, float rad, std::string data);

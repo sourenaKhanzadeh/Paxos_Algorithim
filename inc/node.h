@@ -17,9 +17,11 @@ private:
 public:
   bool recieved = false;
   bool sent = false;
+  bool data_confirmed = false;
   float scaler = 1;
   static int num;
   static bool leader_elected;
+  static int confirms;
   Node(sf::Vector2<int> pos, sf::Color color, float radius, std::string data)
   : GameObject(pos, color){
     _data = data;

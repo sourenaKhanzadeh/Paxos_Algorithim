@@ -51,6 +51,10 @@ void NodeSystem::awake(){
 }
 
 void NodeSystem::_clear(){
+  /**
+  * clear the nodes from
+  * the screen
+  */
   for(int i=0;i<_num;i++){
     delete _nodes.at(i);
     _nodes.at(i) = NULL;
@@ -66,15 +70,16 @@ void NodeSystem::_promise(){
   * to none leader nodes
   */
   // generate a random value
-  std::string value = random_string().substr(0,2);
+  if(_data_mutex){
+    _data = random_string().substr(0,2);
+    _data_mutex = false;
+  }
 
   for(int i=0;i<_nodes.size();i++){
     if(_nodes.at(i) != NULL && i != leader_index && leader_index < _nodes.size())
       if(leader_index>=0){
 
         // add promise to the data
-        // _nodes.at(i)->appendData(value);
-
         sf::Vector2f dline = (sf::Vector2f)_nodes.at(i)->getPos() +
           sf::Vector2f(_rad, _rad);
 
@@ -88,16 +93,27 @@ void NodeSystem::_promise(){
 
         sf::Vertex line[2];
         int range = _nodes.size()/7;
+
+        // check if request reached node
         if(_nodes.at(i)->recieved ||
         (inRange(dline.x - _rad*range, dline.x + _rad*range, (leader + dline_n).x )
           && inRange(dline.y - _rad*range, dline.y + _rad*range, (leader + dline_n).y))){
+
           _nodes.at(i)->setColor(sf::Color::Magenta);
 
           Node *n = _nodes.at(i);
+          Node *lead = _nodes.at(leader_index);
 
           dline_n = norm(dline - leader);
           dline_n = sf::Vector2f(dline_n.x * n->scaler, dline_n.y * n->scaler);
 
+
+          // check majority votes
+          if(n->sent && !n->data_confirmed && Node::confirms >= (_nodes.size()/2)+1){
+            n->appendData(_data);
+            n->data_confirmed = true;
+            n->setColor(sf::Color::Black);
+          }
 
           if(!n->sent && inRange(leader.x-_rad * range, leader.x + _rad * range, (dline - dline_n).x) &&
             inRange(leader.y - _rad * range, leader.y + _rad * range, (dline - dline_n).y)){
@@ -105,16 +121,22 @@ void NodeSystem::_promise(){
               // take vector from leader to other nodes
               line[0] = sf::Vertex(leader, sf::Color::Blue);
               line[1] = sf::Vertex(leader, sf::Color::Blue);
+
               n->sent = true;
+
+              Node::confirms++;
+
+
           }
           else if(!n->sent){
             // take vector from leader to other nodes
             line[0] = sf::Vertex(dline, sf::Color::Magenta);
             line[1] = sf::Vertex(dline - dline_n, sf::Color::Magenta);
+
           }
 
 
-          _nodes.at(i)->recieved = true;
+          n->recieved = true;
           n->scaler += 3;
 
         }else{
@@ -125,16 +147,9 @@ void NodeSystem::_promise(){
 
         }
 
-        // if(leader.x > dline.x)dline_n.x *= -_scaler;
-        // else dline_n.x *= _scaler;
-        // if(leader.y > dline.y)dline_n.y *= _scaler;
-        // else dline_n.y *= -_scaler;
-
-
-
-
       GameObject::window->draw(line, 2, sf::Lines);
       _scaler++;
+
 
     }
   }
