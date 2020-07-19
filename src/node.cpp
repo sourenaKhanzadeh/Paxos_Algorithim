@@ -15,6 +15,14 @@ Node::~Node(){
   num--;
 }
 
+void Node::reset(){
+  recieved = false;
+  sent = false;
+  data_confirmed = false;
+  scaler = 1;
+  Node::confirms = 0;
+}
+
 void Node::render(){
   /**
   * render the display
@@ -92,8 +100,6 @@ void Node::control(){
 
   // check constraint's
   bool mouse_col[2] = {
-    // pos.x-_rad <= mouse_pos.x && mouse_pos.x <= pos.x + _rad,
-    // pos.y-_rad <= mouse_pos.y && mouse_pos.y <= pos.y+_rad
     inRange(pos.x-_rad*3, pos.x+_rad*3, mouse_pos.x),
     inRange(pos.y-_rad*3, pos.y+_rad*3, mouse_pos.y)
   };

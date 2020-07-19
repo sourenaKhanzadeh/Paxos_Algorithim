@@ -18,6 +18,7 @@ private:
 
   void _promise();
   void _clear();
+  void _reset(Node *n);
 
   bool _is_promise = false;
   bool _data_mutex = true;

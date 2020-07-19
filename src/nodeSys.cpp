@@ -56,12 +56,21 @@ void NodeSystem::_clear(){
   * the screen
   */
   for(int i=0;i<_num;i++){
+    _reset(_nodes.at(i));
     delete _nodes.at(i);
     _nodes.at(i) = NULL;
   }
   _nodes.clear();
   _scaler = 1;
   _is_promise = false;
+}
+
+void NodeSystem::_reset(Node *n){
+  _scaler = 1;
+  _is_promise = false;
+  _data_mutex = true;
+  _data = "";
+  n->reset();
 }
 
 void NodeSystem::_promise(){
@@ -111,6 +120,13 @@ void NodeSystem::_promise(){
           if(n->sent && !n->data_confirmed && Node::confirms >= (_nodes.size()/2)+1){
             n->appendData(_data);
             n->data_confirmed = true;
+          }
+
+          // reset if paxos completed
+          if(Node::confirms == _nodes.size()-1){
+            for(int i=0;i<_nodes.size();i++){
+              _reset(_nodes.at(i));
+            }
           }
 
           if(!n->sent && inRange(leader.x-_rad * range, leader.x + _rad * range, (dline - dline_n).x) &&
