@@ -99,10 +99,9 @@ void NodeSystem::_promise(){
         (inRange(dline.x - _rad*range, dline.x + _rad*range, (leader + dline_n).x )
           && inRange(dline.y - _rad*range, dline.y + _rad*range, (leader + dline_n).y))){
 
-          _nodes.at(i)->setColor(sf::Color::Magenta);
-
           Node *n = _nodes.at(i);
           Node *lead = _nodes.at(leader_index);
+
 
           dline_n = norm(dline - leader);
           dline_n = sf::Vector2f(dline_n.x * n->scaler, dline_n.y * n->scaler);
@@ -112,7 +111,6 @@ void NodeSystem::_promise(){
           if(n->sent && !n->data_confirmed && Node::confirms >= (_nodes.size()/2)+1){
             n->appendData(_data);
             n->data_confirmed = true;
-            n->setColor(sf::Color::Black);
           }
 
           if(!n->sent && inRange(leader.x-_rad * range, leader.x + _rad * range, (dline - dline_n).x) &&
@@ -126,6 +124,8 @@ void NodeSystem::_promise(){
 
               Node::confirms++;
 
+              n->setColor(sf::Color::Black);
+
 
           }
           else if(!n->sent){
@@ -133,6 +133,7 @@ void NodeSystem::_promise(){
             line[0] = sf::Vertex(dline, sf::Color::Magenta);
             line[1] = sf::Vertex(dline - dline_n, sf::Color::Magenta);
 
+            n->setColor(sf::Color::Magenta);
           }
 
 
