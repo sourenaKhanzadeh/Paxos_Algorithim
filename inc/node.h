@@ -16,6 +16,8 @@ private:
   void _select_leader(sf::Vector2<int> pos, sf::Vector2i mouse_pos, bool mouse_col[2]);
 public:
   bool recieved = false;
+  bool sent = false;
+  float scaler = 1;
   static int num;
   static bool leader_elected;
   Node(sf::Vector2<int> pos, sf::Color color, float radius, std::string data)

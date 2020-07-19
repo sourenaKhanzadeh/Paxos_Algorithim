@@ -85,8 +85,6 @@ void NodeSystem::_promise(){
 
         dline_n = sf::Vector2f(dline_n.x*-_scaler, dline_n.y*-_scaler);
 
-        // dline.x - _rad >= (leader + dline_n).x  && (leader + dline).x >= dline.x + _rad &&
-          // dline.y - _rad >= (leader + dline_n).y && (leader + dline_n).y >= dline.y + _rad
 
         sf::Vertex line[2];
         int range = _nodes.size()/7;
@@ -95,17 +93,33 @@ void NodeSystem::_promise(){
           && inRange(dline.y - _rad*range, dline.y + _rad*range, (leader + dline_n).y))){
           _nodes.at(i)->setColor(sf::Color::Magenta);
 
-          // take vector from leader to other nodes
+          Node *n = _nodes.at(i);
 
-          line[0] = sf::Vertex(leader, sf::Color::Blue);
-          line[1] = sf::Vertex(leader, sf::Color::Blue);
+          dline_n = norm(dline - leader);
+          dline_n = sf::Vector2f(dline_n.x * n->scaler, dline_n.y * n->scaler);
+
+
+          if(!n->sent && inRange(leader.x-_rad * range, leader.x + _rad * range, (dline - dline_n).x) &&
+            inRange(leader.y - _rad * range, leader.y + _rad * range, (dline - dline_n).y)){
+
+              // take vector from leader to other nodes
+              line[0] = sf::Vertex(leader, sf::Color::Blue);
+              line[1] = sf::Vertex(leader, sf::Color::Blue);
+              n->sent = true;
+          }
+          else if(!n->sent){
+            // take vector from leader to other nodes
+            line[0] = sf::Vertex(dline, sf::Color::Magenta);
+            line[1] = sf::Vertex(dline - dline_n, sf::Color::Magenta);
+          }
+
 
           _nodes.at(i)->recieved = true;
+          n->scaler += 3;
 
         }else{
 
           // take vector from leader to other nodes
-
           line[0] = sf::Vertex(leader, sf::Color::Blue);
           line[1] = sf::Vertex(leader + dline_n, sf::Color::Blue);
 
